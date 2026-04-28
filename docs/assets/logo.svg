@@ -1,0 +1,38 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 120 120">
+  <defs>
+    <radialGradient id="g" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#8b5cf6"/>
+      <stop offset="100%" stop-color="#4c1d95"/>
+    </radialGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="60" cy="60" r="56" fill="url(#g)"/>
+  <!-- Mushroom silhouette -->
+  <g fill="#f5f3ff" opacity="0.95">
+    <!-- Cap -->
+    <path d="M 35,52 Q 35,28 60,25 Q 85,28 85,52 Q 75,48 60,47 Q 45,48 35,52 Z"/>
+    <!-- Stem -->
+    <path d="M 52,52 L 52,82 Q 52,88 58,88 L 62,88 Q 68,88 68,82 L 68,52"/>
+    <!-- Mycelium roots -->
+    <g stroke="#f5f3ff" stroke-width="1.5" fill="none" opacity="0.6" stroke-linecap="round">
+      <path d="M 55,88 Q 48,95 38,98"/>
+      <path d="M 65,88 Q 72,95 82,98"/>
+      <path d="M 58,88 Q 52,100 45,108"/>
+      <path d="M 62,88 Q 68,100 75,108"/>
+      <path d="M 60,88 Q 60,100 55,112"/>
+      <path d="M 60,88 Q 60,100 65,112"/>
+      <!-- Tips -->
+      <circle cx="38" cy="98" r="1.5" fill="#f5f3ff"/>
+      <circle cx="82" cy="98" r="1.5" fill="#f5f3ff"/>
+      <circle cx="45" cy="108" r="1.5" fill="#f5f3ff"/>
+      <circle cx="75" cy="108" r="1.5" fill="#f5f3ff"/>
+      <circle cx="55" cy="112" r="1.5" fill="#f5f3ff"/>
+      <circle cx="65" cy="112" r="1.5" fill="#f5f3ff"/>
+    </g>
+  </g>
+  <!-- Signal waves (IoT) -->
+  <g fill="none" stroke="#c4b5fd" stroke-width="1.2" opacity="0.5">
+    <path d="M 88,38 Q 94,30 88,22"/>
+    <path d="M 93,42 Q 102,30 93,18"/>
+  </g>
+</svg>
