@@ -6,9 +6,9 @@
 
 # 🌿 HONGUERA
 
-### **Open Hardware para Cultivo de Precisión Fúngica**
+### **Open Hardware for Precision Fungal Cultivation**
 
-*Un micelio de sensores. Una red que piensa. Un cuerpo que crece.*
+*A mycelium of sensors. A network that thinks. A body that grows.*
 
 <img src="docs/assets/mycelium-banner.svg" width="560" alt="Mycelium network">
 
@@ -26,122 +26,122 @@
 
 ---
 
-> **Honguera** es un sistema de climatización de precisión para cultivo fúngico indoor.
-> Controla temperatura, humedad y CO₂ con un ESP32, sensores estándar y una red de inteligencia distribuida.
+> **Honguera** is a precision climate control system for indoor fungal cultivation.
+> It manages temperature, humidity, and CO₂ using an ESP32, standard sensors, and a distributed intelligence network.
 >
-> **No es un termostato. Es un micelio digital.**
+> **It's not a thermostat. It's a digital mycelium.**
 
-Un micelio real no tiene cerebro central. Cada hifa percibe, decide y responde localmente — pero comparte información con toda la red. Honguera funciona igual: sensores distribuidos, control local en el nodo, y una capa de ML que aprende la inercia térmica del espacio como el micelio aprende la geometría del sustrato.
+A real mycelium has no central brain. Each hypha senses, decides, and responds locally — yet shares information with the entire network. Honguera works the same way: distributed sensors, local control at the node, and an ML layer that learns the thermal inertia of the space — just as mycelium learns the geometry of its substrate.
 
-**Diseñado para replicarse. Como una espora.**
+**Designed to replicate. Like a spore.**
 
 ---
 
 ## ⚡ Quick Start
 
 ```bash
-# Clonar el micelio
-git clone https://github.com/honguera/honguera.git
+# Clone the mycelium
+git clone https://github.com/Freeak88/honguera.git
 cd honguera
 
-# Levantar la red (MQTT + InfluxDB + Node-RED + Grafana)
+# Spin up the network (MQTT + InfluxDB + Node-RED + Grafana)
 cd software && docker compose up -d
 
-# Flashear el nodo (PlatformIO)
+# Flash the node (PlatformIO)
 cd firmware && pio run --target upload
 
-# Monitorear telemetría
+# Monitor telemetry
 pio device monitor
 ```
 
 <details>
-<summary>🔧 Requisitos previos</summary>
+<summary>🔧 Prerequisites</summary>
 
-- ESP32 DevKit (cualquier variante)
-- Sensores: SHT40 + MH-Z19B (+ DS18B20 opcional)
-- PlatformIO instalado
+- ESP32 DevKit (any variant)
+- Sensors: SHT40 + MH-Z19B (+ optional DS18B20)
+- PlatformIO installed
 - Docker + Docker Compose
-- Red WiFi local
+- Local WiFi network
 
-Costo total del prototipo: **~$110-170 USD** → [BOM completo](hardware/BOM/BOM_v0.1.md)
+Total prototype cost: **~$110-170 USD** → [Full BOM](hardware/BOM/BOM_v0.1.md)
 </details>
 
 ---
 
-## 🧬 Arquitectura — El Cuerpo del Micelio
+## 🧬 Architecture — The Body of the Mycelium
 
 ```
                          ┌─────────────┐
-                         │   Micelio    │
+                         │   Mycelium   │
                          │  (ML Layer)  │
                          │  Predictive  │
                          └──────┬───────┘
                                 │ learns thermal inertia
                                 ▼
 ┌──────────┐    MQTT     ┌──────────┐    writes    ┌──────────┐
-│ Hifas ×N │◄───────────►│  Manto   │─────────────►│ Suelo    │
+│ Hyphae×N │◄───────────►│  Mantle  │─────────────►│  Soil    │
 │ (ESP32)  │   pub/sub   │(Mosquitto)│              │(InfluxDB)│
 └────┬─────┘             └──────────┘              └──────────┘
      │                                                     │
      │ senses         ┌──────────┐                         │
-     ├────────────────►│ Fronda   │◄────────────────────────┘
+     ├────────────────►│  Frond   │◄────────────────────────┘
      │                 │(Grafana) │        reads
      │                 └──────────┘
      │
      │ actuates
      ▼
 ┌──────────┐  ┌───────────┐  ┌──────────┐
-│ Calefactor│  │ Humidificador│  │ Extractor │
-│  SSR 700W │  │ Ultrasónico │  │  CO₂     │
+│  Heater   │  │ Humidifier │  │ Exhaust  │
+│ SSR 700W  │  │ Ultrasonic │  │  CO₂     │
 └──────────┘  └───────────┘  └──────────┘
 ```
 
-| Órgano | Componente | Función biológica |
-|--------|-----------|-------------------|
-| **Hifas** | ESP32 + sensores | Perciben el entorno, deciden localmente |
-| **Manto** | Mosquitto (MQTT) | Red de señalización entre hifas |
-| **Suelo** | InfluxDB | Memoria. Almacena lo aprendido |
-| **Fronda** | Grafana / Node-RED | Visualización. La superficie visible |
-| **Micelio** | ML Layer | Inteligencia distribuida. Predice, adapta |
+| Organ | Component | Biological function |
+|-------|-----------|---------------------|
+| **Hyphae** | ESP32 + sensors | Sense the environment, decide locally |
+| **Mantle** | Mosquitto (MQTT) | Signaling network between hyphae |
+| **Soil** | InfluxDB | Memory. Stores what was learned |
+| **Frond** | Grafana / Node-RED | Visualization. The visible surface |
+| **Mycelium** | ML Layer | Distributed intelligence. Predicts, adapts |
 
 ---
 
-## 🍄 Especies Soportadas
+## 🍄 Supported Species
 
-Cada especie es un "firmware biológico" distinto. Se carga como perfil JSON vía MQTT:
+Each species is a distinct "biological firmware." Loaded as a JSON profile via MQTT:
 
-| Especie | Temp fructificación | Humedad | CO₂ máx | Dificultad |
-|---------|--------------------:|--------:|--------:|:----------:|
-| 🟤 **Gírgola** _(P. ostreatus)_ | 18°C | 90% | 800ppm | ⭐ |
+| Species | Fruit. temp | Humidity | Max CO₂ | Difficulty |
+|---------|------------:|---------:|--------:|:----------:|
+| 🟤 **Oyster** _(P. ostreatus)_ | 18°C | 90% | 800ppm | ⭐ |
 | 🟡 **Shiitake** _(L. edodes)_ | 18°C | 85% | 1000ppm | ⭐⭐ |
 | 🟠 **Lion's Mane** _(H. erinaceus)_ | 18°C | 90% | 600ppm | ⭐⭐ |
 | 🔴 **Reishi** _(G. lucidum)_ | 25°C | 90% | 800ppm | ⭐⭐⭐ |
 
-→ [Perfiles completos con las 3 fases](docs/species/profiles.md)
+→ [Full profiles with all 3 growth phases](docs/species/profiles.md)
 
 ---
 
 ## 📐 Hardware
 
-### Especificación de la Nave
+### Chamber Specifications
 
-| Parámetro | Valor |
+| Parameter | Value |
 |-----------|-------|
-| Dimensiones | 2m × 1.5m × 2m |
-| Estructura | Madera curada + aislamiento aluminio/fibra vidrio |
-| Capacidad | ~150kg sustrato |
-| Calefacción | Cable losa radiante 700W + SSR |
-| Humidificación | 3× transductores piezoeléctricos 1.66MHz |
-| Gestión gaseosa | Extractor controlado por CO₂ |
+| Dimensions | 2m × 1.5m × 2m |
+| Structure | Cured wood + aluminum/fiberglass insulation |
+| Capacity | ~150kg substrate |
+| Heating | Radiant floor cable 700W + SSR |
+| Humidification | 3× piezoelectric transducers 1.66MHz |
+| Gas management | CO₂-controlled exhaust fan |
 
-→ [SPEC.md](SPEC.md) · [Planos PDF](blueprints/) · [BOM](hardware/BOM/BOM_v0.1.md)
+→ [SPEC.md](SPEC.md) · [Blueprints PDF](blueprints/) · [BOM](hardware/BOM/BOM_v0.1.md)
 
-### Esquemático (en desarrollo)
+### Schematic (in progress)
 
-El diseño PCB en KiCad está en camino. Mientras tanto, el prototipo funciona en protoboard.
+The KiCad PCB design is on its way. Meanwhile, the prototype runs on breadboard.
 
 [![KiCad](https://img.shields.io/badge/PCB-KiCad-1a1a2e?style=flat-square&logo=kicad&logoColor=white)](hardware/kicad/)
-[![JLCPCB](https://img.shields.io/badge/Producción-JLCPCB-ff6600?style=flat-square)](https://jlcpcb.com/)
+[![JLCPCB](https://img.shields.io/badge/Fabrication-JLCPCB-ff6600?style=flat-square)](https://jlcpcb.com/)
 
 ---
 
@@ -150,27 +150,27 @@ El diseño PCB en KiCad está en camino. Mientras tanto, el prototipo funciona e
 ```
 firmware/
 ├── src/
-│   └── main.cpp       ← Control loop + sensores + MQTT
-├── lib/               ← Librerías propias
-└── platformio.ini     ← Dependencias y config
+│   └── main.cpp       ← Control loop + sensors + MQTT
+├── lib/               ← Custom libraries
+└── platformio.ini     ← Dependencies and config
 ```
 
 ### Features v0.1
 
-- ✅ Lectura SHT40 (T/H), MH-Z19B (CO₂), DS18B20 (agua)
-- ✅ Control con histéresis: calefactor, humidificador, extractor
-- ✅ MQTT pub/sub: telemetría JSON cada 15s
-- ✅ Control de fase remoto (incubación → inducción → fructificación)
-- ✅ Override manual vía MQTT
-- ✅ Last Will + status online/offline
+- ✅ SHT40 (T/H), MH-Z19B (CO₂), DS18B20 (water) reading
+- ✅ Hysteresis control: heater, humidifier, exhaust
+- ✅ MQTT pub/sub: JSON telemetry every 15s
+- ✅ Remote phase control (incubation → induction → fruiting)
+- ✅ Manual override via MQTT
+- ✅ Last Will + online/offline status
 
-### Próximo
+### Up Next
 
 - [ ] OTA updates
-- [ ] PID tuning automático
-- [ ] Modo ahorro energético (solar-ready)
+- [ ] Auto PID tuning
+- [ ] Power-saving mode (solar-ready)
 - [ ] WiFi Manager (AP captive portal)
-- [ ] Multi-nodo (varias naves, un broker)
+- [ ] Multi-node (multiple chambers, one broker)
 
 [![PlatformIO](https://img.shields.io/badge/Platform-PlatformIO-orange?style=flat-square&logo=platformio&logoColor=white)](firmware/)
 [![Arduino](https://img.shields.io/badge/Framework-Arduino-00979D?style=flat-square&logo=arduino&logoColor=white)](firmware/)
@@ -180,15 +180,15 @@ firmware/
 ## 🧠 Software Stack
 
 ```bash
-docker compose up -d    # Un comando para levantar todo el ecosistema
+docker compose up -d    # One command to spin up the entire ecosystem
 ```
 
-| Servicio | Puerto | Rol |
-|----------|--------|-----|
-| Mosquitto | 1883 | Broker MQTT — el sistema nervioso |
-| InfluxDB | 8086 | Serie temporal — la memoria del micelio |
-| Node-RED | 1880 | Orquestación + automatización |
-| Grafana | 3000 | Dashboards en tiempo real |
+| Service | Port | Role |
+|---------|------|------|
+| Mosquitto | 1883 | MQTT broker — the nervous system |
+| InfluxDB | 8086 | Time series — the mycelium's memory |
+| Node-RED | 1880 | Orchestration + automation |
+| Grafana | 3000 | Real-time dashboards |
 
 [![Docker](https://img.shields.io/badge/Docker-Compose-2496ED?style=flat-square&logo=docker&logoColor=white)](software/docker-compose.yml)
 [![InfluxDB](https://img.shields.io/badge/InfluxDB-2.7-22ADF6?style=flat-square&logo=influxdb&logoColor=white)](software/)
@@ -197,16 +197,16 @@ docker compose up -d    # Un comando para levantar todo el ecosistema
 
 ---
 
-## 🔬 ML Predictivo (Roadmap)
+## 🔬 Predictive ML (Roadmap)
 
-El micelio no reacciona. **Anticipa.**
+The mycelium doesn't react. **It anticipates.**
 
-| Fase | Modelo | Target |
-|------|--------|--------|
-| v0.1 | Histéresis simple | Funcional ✅ |
-| v0.2 | Regresión lineal | Aprender inercia térmica |
-| v0.3 | LSTM | Predicción a 15min, ±0.3°C |
-| v0.4 | Federado (multi-nodo) | Aprender de otros micelios |
+| Phase | Model | Target |
+|-------|-------|--------|
+| v0.1 | Simple hysteresis | Functional ✅ |
+| v0.2 | Linear regression | Learn thermal inertia |
+| v0.3 | LSTM | 15-min prediction, ±0.3°C |
+| v0.4 | Federated (multi-node) | Learn from other mycelia |
 
 ---
 
@@ -215,48 +215,48 @@ El micelio no reacciona. **Anticipa.**
 ```
 ┌──────────────┐    ┌──────────────┐    ┌──────────────┐    ┌──────────────┐
 │  v0.1 SPORE  │───►│  v0.2 HYPHAE │───►│  v0.3 MYCELIUM│───►│  v1.0 FRUIT  │
-│  Prototipo   │    │  PCB + WiFi  │    │  ML + Multi  │    │  Release     │
-│  quincho BA  │    │  Manager     │    │  nodo        │    │  público     │
+│  Prototype   │    │  PCB + WiFi  │    │  ML + Multi  │    │  Public      │
+│  quincho BA  │    │  Manager     │    │  node        │    │  release     │
 └──────────────┘    └──────────────┘    └──────────────┘    └──────────────┘
-     ✅ NOW             Q3 2026             Q4 2026            2027
+     ✅ NOW             Q3 2026             Q4 2026             2027
 ```
 
 ---
 
-## 🤝 Comunidad
+## 🤝 Community
 
-El micelio crece en conexión. No funciona aislado.
+The mycelium grows through connection. It doesn't work in isolation.
 
-| Canal | Link |
-|-------|------|
-| 💬 Discord | _próximamente_ |
-| 📰 Hackaday.io | _próximamente_ |
-| 📘 Instructables | _próximamente_ |
+| Channel | Link |
+|---------|------|
+| 💬 Discord | _coming soon_ |
+| 📰 Hackaday.io | _coming soon_ |
+| 📘 Instructables | _coming soon_ |
 | 🐛 Issues | [GitHub Issues](../../issues) |
-| 📖 Wiki | _próximamente_ |
+| 📖 Wiki | _coming soon_ |
 
-### Contribuir
+### Contributing
 
-Cada contribución es una hifa nueva que se une a la red.
+Every contribution is a new hypha joining the network.
 
 1. Fork → Branch → PR
-2. Una idea = un PR. Simple.
-3. Convenciones en [CONTRIBUTING.md](CONTRIBUTING.md)
+2. One idea = one PR. Simple.
+3. Conventions in [CONTRIBUTING.md](CONTRIBUTING.md)
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-8b5cf6?style=flat-square)](CONTRIBUTING.md)
 [![Good First Issue](https://img.shields.io/badge/Good_First_Issue-available-22c55e?style=flat-square)](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
 
 ---
 
-## 📜 Licencias
+## 📜 Licenses
 
-Proyecto multinúcleo. Cada capa respira con su propia licencia:
+A multi-core project. Each layer breathes under its own license:
 
-| Capa | Licencia | Por qué |
-|------|----------|---------|
-| 🔩 Hardware (PCB, mecánica) | **CERN-OHL-S 2.0** | Derivados deben permanecer open |
-| ⚡ Firmware | **GPLv3** | Copyleft fuerte. Protege la red |
-| 📄 Documentación | **CC BY-SA 4.0** | Atribución + compartir igual |
+| Layer | License | Why |
+|-------|---------|-----|
+| 🔩 Hardware (PCB, mechanical) | **CERN-OHL-S 2.0** | Derivatives must stay open |
+| ⚡ Firmware | **GPLv3** | Strong copyleft. Protects the network |
+| 📄 Documentation | **CC BY-SA 4.0** | Attribution + share-alike |
 
 ## 🤖 AI Usage Disclosure
 
@@ -275,8 +275,8 @@ Generated code in commits is marked in the commit message with the model used.
 
 <div align="center">
 
-**Hecho con 🍄 por la comunidad open hardware**
+**Made with 🍄 by the open hardware community**
 
-*Donde la red de sensores se comporta como una red de hifas.*
+*Where the sensor network behaves like a hyphal network.*
 
 </div>
