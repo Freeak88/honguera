@@ -1,0 +1,8 @@
+# Local-only directories (workspace reorg 2026-05-09)
+# These live in the workspace alongside the hardware repo but must not be tracked here.
+# Funding strategy lives in the separate private repo Freeak88/honguera-funding.
+# ONG legal docs and brand-legacy material are managed outside this repo.
+data/
+funding/
+ong/
+web-legacy/
