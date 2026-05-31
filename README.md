@@ -6,9 +6,9 @@
 
 # 🌿 HONGUERA
 
-### **Open Hardware for Precision Fungal Cultivation**
+### **Open Hardware for Precision Fungal Cultivation by [Funga](https://funga.com.ar)**
 
-*A mycelium of sensors. A network that thinks. A body that grows.*
+*A mycelium of sensors. A network that thinks. A body that grows. Core hub of [Funga](https://funga.com.ar)'s open-source mycological automation.*
 
 <img src="docs/assets/mycelium-banner.svg" width="560" alt="Mycelium network">
 
@@ -26,7 +26,7 @@
 
 ---
 
-> **Honguera** is a precision climate control system for indoor fungal cultivation.
+> **Honguera** is an open-source precision climate control and biological observability system for indoor fungal cultivation, developed as part of the [Funga](https://funga.com.ar) open-source hardware ecosystem.
 > It manages temperature, humidity, and CO₂ using an ESP32, standard sensors, and a distributed intelligence network.
 >
 > **It's not a thermostat. It's a digital mycelium.**
