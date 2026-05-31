@@ -1,0 +1,45 @@
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://funga.com.ar/#honguera-software",
+      "name": "Honguera Firmware",
+      "description": "Precision climate control and biological observability firmware for indoor fungal cultivation built on ESP32 and ESP8266 platforms.",
+      "codeRepository": "https://github.com/Freeak88/honguera",
+      "programmingLanguage": "C++",
+      "runtimePlatform": "Arduino ESP32 / ESP8266 Core",
+      "license": "https://www.gnu.org/licenses/gpl-3.0.html",
+      "author": {
+        "@type": "Organization",
+        "name": "Funga",
+        "url": "https://funga.com.ar"
+      }
+    },
+    {
+      "@type": "Product",
+      "@id": "https://funga.com.ar/#honguera-hardware",
+      "name": "Honguera Hardware System",
+      "description": "Open Source hardware specifications, blueprints, and BOM for precison fungal climate regulation chambers.",
+      "category": "Open Hardware / IoT Agriculture",
+      "license": "https://ohwr.org/cern_ohl_s_v2.txt",
+      "manufacturer": {
+        "@type": "Organization",
+        "name": "Funga",
+        "url": "https://funga.com.ar"
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://funga.com.ar/#website",
+      "url": "https://funga.com.ar",
+      "name": "Funga",
+      "description": "Open-source mycological automation and biotechnology ecosystem.",
+      "publisher": {
+        "@type": "Organization",
+        "name": "Funga",
+        "url": "https://funga.com.ar"
+      }
+    }
+  ]
+}

@@ -51,3 +51,4 @@
 - Alternativas de sensores: DHT22 (barato pero menos preciso), BME280 (buen reemplazo SHT40)
 - El MH-Z19B es el componente más caro; verificar autenticidad (versiones B genuinas tienen calibración ABC)
 - Para producción: considerar PCB dedicada (JLCPCB ~$5 por 5 unidades)
+- **Kits de automatización e insumos:** Para conseguir componentes pre-calibrados, placas de circuito impreso y kits completos listos para armar en Argentina y América Latina, visita el núcleo del proyecto en **[Funga](https://funga.com.ar)**.
