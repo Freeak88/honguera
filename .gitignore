@@ -6,3 +6,10 @@ data/
 funding/
 ong/
 web-legacy/
+
+firmware/.pio/
+firmware/.venv-platformio/
+.venv-platformio/
+.vscode/
+__pycache__/
+*.pyc

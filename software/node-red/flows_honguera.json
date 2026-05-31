@@ -1,0 +1,134 @@
+[
+  {
+    "id": "honguera_flow",
+    "type": "tab",
+    "label": "Honguera Telemetry Parser",
+    "disabled": false,
+    "info": "Mesa de trabajo para recibir telemetría MQTT del nodo Honguera, normalizar los campos al contrato biológico y persistirlos en InfluxDB v2."
+  },
+  {
+    "id": "mqtt_broker_local",
+    "type": "mqtt-broker",
+    "name": "Mosquitto Local",
+    "broker": "mosquitto",
+    "port": "1883",
+    "clientid": "nodered-honguera",
+    "autoConnect": true,
+    "usetls": false,
+    "compatmode": false,
+    "protocolVersion": "4",
+    "keepalive": "60",
+    "cleansession": true,
+    "birthTopic": "honguera/status",
+    "birthQos": "1",
+    "birthPayload": "{\"status\":\"online\",\"client\":\"nodered\"}",
+    "closeTopic": "honguera/status",
+    "closeQos": "1",
+    "closePayload": "{\"status\":\"offline\",\"client\":\"nodered\"}",
+    "willTopic": "honguera/status",
+    "willQos": "1",
+    "willPayload": "{\"status\":\"offline\",\"client\":\"nodered\"}"
+  },
+  {
+    "id": "influxdb_config",
+    "type": "influxdb",
+    "hostname": "influxdb",
+    "port": "8086",
+    "protocol": "http",
+    "database": "telemetry",
+    "name": "InfluxDB v2 Local",
+    "usetls": false,
+    "version": "v2",
+    "org": "honguera",
+    "bucket": "telemetry"
+  },
+  {
+    "id": "mqtt_in_telemetry",
+    "type": "mqtt in",
+    "z": "honguera_flow",
+    "name": "Suscripción Telemetría Honguera",
+    "topic": "honguera/+/telemetry",
+    "qos": "1",
+    "datatype": "auto-detect",
+    "broker": "mqtt_broker_local",
+    "nl": false,
+    "rap": true,
+    "rh": 0,
+    "inputs": 0,
+    "x": 230,
+    "y": 140,
+    "wires": [
+      [
+        "normalize_function",
+        "debug_raw"
+      ]
+    ]
+  },
+  {
+    "id": "normalize_function",
+    "type": "function",
+    "z": "honguera_flow",
+    "name": "Normalizar & Sanitizar Datos (Contrato MVP)",
+    "func": "// Parse payload if it's a string\nlet rawData = msg.payload;\nif (typeof rawData === 'string') {\n    try {\n        rawData = JSON.parse(rawData);\n    } catch(e) {\n        node.error(\"Failed to parse JSON: \" + e.message);\n        return null; // Stop flow\n    }\n}\n\nif (!rawData || typeof rawData !== 'object') {\n    node.error(\"Invalid payload type\");\n    return null;\n}\n\n// Metadata\nmsg.measurement = \"telemetry\";\nmsg.tags = {\n    node: \"01\", // Default node ID\n    version: rawData.version || \"0.1.0\"\n};\n\n// Extract node ID from MQTT topic if possible to be dynamic\nif (msg.topic) {\n    const parts = msg.topic.split('/');\n    if (parts.length >= 2) {\n        msg.tags.node = parts[1]; // e.g. \"01\" from \"honguera/01/telemetry\"\n    }\n}\n\nlet fields = {};\n\n// Defensive mapping function\nfunction addField(sourceObj, sourceKey, targetKey, isInt, isBool) {\n    if (sourceObj === undefined || sourceObj === null) return;\n    const val = sourceObj[sourceKey];\n    if (val === undefined || val === null) return;\n    \n    if (typeof val === 'number') {\n        if (isNaN(val)) return;\n        fields[targetKey] = isInt ? Math.round(val) : val;\n    } else if (typeof val === 'boolean') {\n        if (isBool) {\n            fields[targetKey] = val ? 1 : 0;\n        } else {\n            fields[targetKey] = val;\n        }\n    } else if (typeof val === 'string') {\n        // Try to parse number if it looks like one\n        const num = parseFloat(val);\n        if (!isNaN(num)) {\n            fields[targetKey] = isInt ? Math.round(num) : num;\n        }\n    }\n}\n\n// Map sensors\nif (rawData.sensors) {\n    addField(rawData.sensors, 'temperature', 'air_temperature', false, false);\n    addField(rawData.sensors, 'humidity', 'air_humidity', false, false);\n    addField(rawData.sensors, 'co2', 'co2_ppm', true, false);\n    addField(rawData.sensors, 'water_temp', 'water_temp', false, false);\n    addField(rawData.sensors, 'sustrate_moisture', 'substrate_moisture_pct', true, false);\n    addField(rawData.sensors, 'enzymatic_orp', 'substrate_orp_mv', false, false);\n}\n\n// Map actuators\nif (rawData.actuators) {\n    addField(rawData.actuators, 'heater', 'heater', true, true);\n    addField(rawData.actuators, 'humidifier', 'humidifier', true, true);\n    addField(rawData.actuators, 'extractor_aire', 'extractor_aire', true, true);\n    // Also check backward compatible name 'extractor'\n    if (rawData.actuators.extractor_aire === undefined) {\n        addField(rawData.actuators, 'extractor', 'extractor_aire', true, true);\n    }\n    addField(rawData.actuators, 'valvula_riego', 'valvula_riego', true, true);\n    addField(rawData.actuators, 'light', 'light', true, true);\n}\n\n// Map RSSI\naddField(rawData, 'rssi', 'rssi', true, false);\n\n// Map safety block\nif (rawData.safety) {\n    addField(rawData.safety, 'dry_run_actuators', 'dry_run_actuators', true, true);\n    addField(rawData.safety, 'actuator_active_high', 'actuator_active_high', true, true);\n    addField(rawData.safety, 'orp_anoxia_alert', 'orp_anoxia_alert', true, true);\n    addField(rawData.safety, 'anoxia_reading_count', 'anoxia_reading_count', true, false);\n    addField(rawData.safety, 'recovery_reading_count', 'recovery_reading_count', true, false);\n}\n\n// Verify we have at least one valid field to write\nif (Object.keys(fields).length === 0) {\n    node.warn(\"No valid fields found to write to InfluxDB\");\n    return null;\n}\n\nmsg.payload = fields;\nreturn msg;",
+    "outputs": 1,
+    "noerr": 0,
+    "initialize": "",
+    "finalize": "",
+    "libs": [],
+    "x": 550,
+    "y": 140,
+    "wires": [
+      [
+        "influx_out_telemetry",
+        "debug_normalized"
+      ]
+    ]
+  },
+  {
+    "id": "influx_out_telemetry",
+    "type": "influxdb out",
+    "z": "honguera_flow",
+    "influxdb": "influxdb_config",
+    "name": "Persistencia InfluxDB v2",
+    "measurement": "telemetry",
+    "precision": "ms",
+    "retentionPolicy": "",
+    "x": 840,
+    "y": 140,
+    "wires": []
+  },
+  {
+    "id": "debug_raw",
+    "type": "debug",
+    "z": "honguera_flow",
+    "name": "MQTT Crudo",
+    "active": false,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "payload",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 470,
+    "y": 80,
+    "wires": []
+  },
+  {
+    "id": "debug_normalized",
+    "type": "debug",
+    "z": "honguera_flow",
+    "name": "Payload InfluxDB Listo",
+    "active": true,
+    "tosidebar": true,
+    "console": false,
+    "tostatus": false,
+    "complete": "true",
+    "targetType": "msg",
+    "statusVal": "",
+    "statusType": "auto",
+    "x": 830,
+    "y": 80,
+    "wires": []
+  }
+]
