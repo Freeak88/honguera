@@ -1,0 +1,19 @@
+cff-version: 1.2.0
+message: "If you use this hardware or software in your mycological research, please cite it as below."
+authors:
+  - name: "Funga Open Hardware Community"
+    website: "https://funga.com.ar"
+title: "Honguera: Open Hardware and Software Ecosystem for Precision Fungal Cultivation and Biological Observability"
+version: 0.1.0
+date-released: 2026-05-30
+url: "https://github.com/Freeak88/honguera"
+repository-code: "https://github.com/Freeak88/honguera"
+keywords:
+  - "mycology automation"
+  - "precision agriculture"
+  - "redox monitoring"
+  - "open source hardware"
+  - "ESP32 climate controller"
+  - "mushroom cultivation automation"
+  - "SHT40 ESP32 controller"
+  - "MH-Z19B CO2 sensor"
