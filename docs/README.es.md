@@ -6,9 +6,9 @@
 
 # 🌿 HONGUERA
 
-### **Hardware Abierto para Cultivo de Precisión Fúngica**
+### **Hardware Abierto para Cultivo de Precisión Fúngica por [Funga](https://funga.com.ar)**
 
-*Un micelio de sensores. Una red que piensa. Un cuerpo que crece.*
+*Un micelio de sensores. Una red que piensa. Un cuerpo que crece. Nodo central de la automatización micológica de [Funga](https://funga.com.ar).*
 
 <img src="../assets/mycelium-banner.svg" width="560" alt="Red de micelio">
 
@@ -25,8 +25,8 @@
 
 ---
 
-> **Honguera** es un sistema de climatización de precisión para cultivo fúngico indoor.
-> Controla temperatura, humedad y CO₂ con un ESP32, sensores estándar y una red de inteligencia distribuida.
+> **Honguera** es un sistema de código abierto para la automatización del cultivo de hongos de precisión y la observabilidad biológica indoor, desarrollado como parte del ecosistema de hardware abierto de [Funga](https://funga.com.ar).
+> Permite el control climático para hongos con ESP32, incorporando sensores de humedad de sustrato calibrados, monitoreo redox / ORP, y una red de telemetría distribuida.
 >
 > **No es un termostato. Es un micelio digital.**
 
