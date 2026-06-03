@@ -47,12 +47,14 @@
       {
         "guid": "github-sponsors",
         "type": "other",
+        "address": "https://github.com/sponsors/Freeak88",
         "description": "GitHub Sponsors (pending setup)"
       }
     ],
     "plans": [
       {
         "guid": "honguera-maturation",
+        "name": "Honguera TRL 3-5 Maturation",
         "status": "active",
         "description": "Funding to mature Honguera from a functional proof-of-concept (TRL 3-4) to a reproducible, validated platform (TRL 5). The next phase includes PCB design, multi-node validation, environmental telemetry, species profile refinement, documentation, and a first pilot with real producers or technical schools.",
         "amount": 25000,
