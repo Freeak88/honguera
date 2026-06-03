@@ -4,9 +4,9 @@
   "entity": {
     "type": "individual",
     "role": "owner",
-    "name": "Damián Ferraro",
+    "name": "Dami\u00e1n Ferraro",
     "email": "damianferraro@gmail.com",
-    "description": "Fundador y desarrollador de Honguera, plataforma open hardware para cultivo fúngico de precisión. Experiencia en IoT, firmware ESP32, automatización, arquitectura de sistemas y proyectos FOSS.",
+    "description": "Fundador y desarrollador de Honguera, plataforma open hardware para cultivo f\u00fangico de precisi\u00f3n. Experiencia en IoT, firmware ESP32, automatizaci\u00f3n, arquitectura de sistemas y proyectos FOSS.",
     "webpageUrl": {
       "url": "https://github.com/Freeak88"
     }
@@ -15,7 +15,7 @@
     {
       "guid": "honguera",
       "name": "Honguera",
-      "description": "Honguera is an open hardware platform for precision fungal cultivation. It uses ESP32 microcontrollers, environmental sensors (temperature, humidity, CO₂), MQTT telemetry, InfluxDB, Grafana dashboards, and Node-RED automation to monitor and control growth chambers for edible mushrooms. The entire system is open source: hardware designs (CERN-OHL-S), firmware (GPLv3), data stack, and species-specific environmental profiles. It aims to make controlled-environment agriculture accessible to small producers, technical schools, and bio-entrepreneurs in the Global South.",
+      "description": "Honguera is an open hardware platform for precision fungal cultivation. It uses ESP32 microcontrollers, environmental sensors (temperature, humidity, CO\u2082), MQTT telemetry, InfluxDB, Grafana dashboards, and Node-RED automation to monitor and control growth chambers for edible mushrooms. The entire system is open source: hardware designs (CERN-OHL-S), firmware (GPLv3), data stack, and species-specific environmental profiles. It aims to make controlled-environment agriculture accessible to small producers, technical schools, and bio-entrepreneurs in the Global South.",
       "webpageUrl": {
         "url": "https://github.com/Freeak88/honguera",
         "wellKnown": "https://github.com/Freeak88/honguera"
@@ -59,7 +59,10 @@
         "description": "Funding to mature Honguera from a functional proof-of-concept (TRL 3-4) to a reproducible, validated platform (TRL 5). The next phase includes PCB design, multi-node validation, environmental telemetry, species profile refinement, documentation, and a first pilot with real producers or technical schools.",
         "amount": 25000,
         "frequency": "one-time",
-        "currency": "USD"
+        "currency": "USD",
+        "channels": [
+          "github-sponsors"
+        ]
       }
     ]
   }
