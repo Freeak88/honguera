@@ -51,6 +51,9 @@ export default defineConfig({
           items: ['community/contributing'],
         },
       ],
+      components: {
+        Footer: './src/components/DocsFooter.astro',
+      },
       customCss: ['./src/styles/custom.css'],
     }),
   ],

@@ -1,0 +1,37 @@
+---
+// Starlight Footer override: keeps the default footer (edit link,
+// pagination, last updated) and appends the funga.com.ar credit.
+import Default from '@astrojs/starlight/components/Footer.astro';
+
+const byText: Record<string, string> = {
+  en: 'A project by',
+  es: 'Un proyecto de',
+  'pt-BR': 'Um projeto de',
+};
+const lang = Astro.currentLocale ?? 'en';
+const by = byText[lang] ?? byText.en;
+---
+
+<Default><slot /></Default>
+<p class="funga-credit">
+  🍄 {by} <a href="https://funga.com.ar">funga.com.ar</a>
+</p>
+
+<style>
+  .funga-credit {
+    margin-top: 1.5rem;
+    padding-top: 1rem;
+    border-top: 1px solid var(--sl-color-hairline);
+    font-size: var(--sl-text-sm);
+    color: var(--sl-color-gray-3);
+    text-align: center;
+  }
+  .funga-credit a {
+    color: var(--sl-color-accent-high);
+    font-weight: 600;
+    text-decoration: none;
+  }
+  .funga-credit a:hover {
+    text-decoration: underline;
+  }
+</style>

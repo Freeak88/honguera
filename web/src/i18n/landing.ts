@@ -61,6 +61,7 @@ export const en = {
   },
   footer: {
     made: 'Made with 🍄 by the open hardware community',
+    by: 'A project by',
     quote: 'Where the sensor network behaves like a hyphal network.',
   },
 };
@@ -125,6 +126,7 @@ export const es = {
   },
   footer: {
     made: 'Hecho con 🍄 por la comunidad de hardware abierto',
+    by: 'Un proyecto de',
     quote: 'Donde la red de sensores se comporta como una red de hifas.',
   },
 };
@@ -189,6 +191,7 @@ export const ptBR = {
   },
   footer: {
     made: 'Feito com 🍄 pela comunidade de hardware aberto',
+    by: 'Um projeto de',
     quote: 'Onde a rede de sensores se comporta como uma rede de hifas.',
   },
 };
