@@ -1,0 +1,424 @@
+---
+// Shared landing page, parameterized by language.
+// Used by /, /es/ and /pt-br/.
+interface Props {
+  lang: string;
+  localePrefix: string; // '' for English (root), '/es', '/pt-br'
+  t: Record<string, any>;
+}
+const { lang, localePrefix, t } = Astro.props;
+
+const base = import.meta.env.BASE_URL.replace(/\/$/, '');
+const docs = (slug: string) => `${base}${localePrefix}/${slug}/`;
+const repo = 'https://github.com/Freeak88/honguera';
+
+const languages = [
+  { code: '', label: 'EN', href: `${base}/` },
+  { code: 'es', label: 'ES', href: `${base}/es/` },
+  { code: 'pt-br', label: 'PT', href: `${base}/pt-br/` },
+];
+---
+
+<!doctype html>
+<html lang={lang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Honguera — {t.tagline}</title>
+    <meta name="description" content={t.description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <meta property="og:title" content={`Honguera — ${t.tagline}`} />
+    <meta property="og:description" content={t.description} />
+    <meta property="og:type" content="website" />
+  </head>
+  <body>
+    <!-- Animated mycelium background -->
+    <svg class="mycelium-bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+      <g class="hyphae" stroke="#a78bfa" fill="none" stroke-width="1.2" stroke-linecap="round">
+        <path d="M -50,450 Q 180,300 400,380 Q 620,460 840,340 Q 1060,220 1280,320 Q 1400,375 1500,300" />
+        <path d="M -50,450 Q 160,560 380,510 Q 600,460 820,540 Q 1040,620 1260,500 Q 1380,440 1500,480" />
+        <path d="M -50,450 Q 220,680 460,630 Q 700,580 900,660 Q 1100,740 1300,620 Q 1420,550 1500,640" />
+        <path d="M 400,380 Q 450,250 520,200" />
+        <path d="M 400,380 Q 350,280 300,230" />
+        <path d="M 840,340 Q 890,220 940,170" />
+        <path d="M 840,340 Q 800,250 750,200" />
+        <path d="M 820,540 Q 770,650 720,710" />
+        <path d="M 1260,500 Q 1310,610 1340,690" />
+        <path d="M 900,660 Q 870,760 840,820" />
+      </g>
+      <g class="nodes" fill="#8b5cf6" stroke="none">
+        <circle cx="400" cy="380" r="5" />
+        <circle cx="840" cy="340" r="5" />
+        <circle cx="380" cy="510" r="5" />
+        <circle cx="820" cy="540" r="5" />
+        <circle cx="1260" cy="500" r="5" />
+        <circle cx="460" cy="630" r="5" />
+      </g>
+      <g class="tips" fill="#c4b5fd" stroke="none">
+        <circle cx="520" cy="200" r="3.5" />
+        <circle cx="300" cy="230" r="3.5" />
+        <circle cx="940" cy="170" r="3.5" />
+        <circle cx="750" cy="200" r="3.5" />
+        <circle cx="720" cy="710" r="3.5" />
+        <circle cx="1340" cy="690" r="3.5" />
+        <circle cx="840" cy="820" r="3.5" />
+      </g>
+    </svg>
+
+    <header class="nav">
+      <div class="nav-inner">
+        <a class="brand" href={`${base}${localePrefix}/`}>
+          <img src={`${base}/favicon.svg`} width="34" height="34" alt="" />
+          <span>HONGUERA</span>
+        </a>
+        <nav>
+          <a href={docs('getting-started')}>{t.nav.docs}</a>
+          <a href={docs('species/profiles')}>{t.nav.species}</a>
+          <a href={docs('community/contributing')}>{t.nav.contribute}</a>
+          <a href={repo} class="gh">GitHub ↗</a>
+          <span class="langs">
+            {languages.map((l) => (
+              <a href={l.href} class:list={[{ active: (localePrefix === '' && l.code === '') || localePrefix === `/${l.code}` }]}>{l.label}</a>
+            ))}
+          </span>
+        </nav>
+      </div>
+    </header>
+
+    <main>
+      <!-- HERO -->
+      <section class="hero">
+        <img class="logo" src={`${base}/favicon.svg`} width="110" height="110" alt="Honguera logo" />
+        <h1>HONGUERA</h1>
+        <p class="tagline">{t.tagline}</p>
+        <p class="poem">{t.poem}</p>
+        <div class="cta">
+          <a class="btn primary" href={docs('getting-started')}>{t.cta.start}</a>
+          <a class="btn ghost" href={repo}>{t.cta.source}</a>
+        </div>
+        <div class="badges">
+          <span>ESP32</span><span>MQTT</span><span>CERN-OHL-S</span><span>GPLv3</span><span>CC BY-SA</span>
+        </div>
+      </section>
+
+      <!-- NOT A THERMOSTAT -->
+      <section class="pitch">
+        <p>{t.pitch.intro}</p>
+        <p class="highlight">{t.pitch.punch}</p>
+        <p>{t.pitch.body}</p>
+      </section>
+
+      <!-- ORGANS -->
+      <section class="section">
+        <h2>{t.organs.title}</h2>
+        <p class="section-sub">{t.organs.sub}</p>
+        <div class="cards five">
+          {t.organs.items.map((o: any) => (
+            <article class="card">
+              <div class="card-icon">{o.icon}</div>
+              <h3>{o.name}</h3>
+              <p class="card-tech">{o.tech}</p>
+              <p>{o.role}</p>
+            </article>
+          ))}
+        </div>
+      </section>
+
+      <!-- SPECIES -->
+      <section class="section">
+        <h2>{t.species.title}</h2>
+        <p class="section-sub">{t.species.sub}</p>
+        <div class="cards four">
+          {t.species.items.map((s: any) => (
+            <article class="card species">
+              <h3>{s.emoji} {s.name}</h3>
+              <p class="latin">{s.latin}</p>
+              <ul>
+                <li>🌡 {s.temp}</li>
+                <li>💧 {s.humidity}</li>
+                <li>🫧 {s.co2}</li>
+              </ul>
+              <p class="difficulty">{s.difficulty}</p>
+            </article>
+          ))}
+        </div>
+        <p class="section-link"><a href={docs('species/profiles')}>{t.species.link} →</a></p>
+      </section>
+
+      <!-- QUICK START -->
+      <section class="section">
+        <h2>{t.quickstart.title}</h2>
+        <pre class="terminal"><code><span class="c"># {t.quickstart.c1}</span>
+git clone https://github.com/Freeak88/honguera.git
+cd honguera
+
+<span class="c"># {t.quickstart.c2}</span>
+cd software && docker compose up -d
+
+<span class="c"># {t.quickstart.c3}</span>
+cd firmware && pio run --target upload</code></pre>
+        <p class="section-link"><a href={docs('getting-started')}>{t.quickstart.link} →</a></p>
+      </section>
+
+      <!-- ROADMAP -->
+      <section class="section">
+        <h2>{t.roadmap.title}</h2>
+        <div class="roadmap">
+          {t.roadmap.items.map((r: any, i: number) => (
+            <div class:list={['milestone', { done: i === 0 }]}>
+              <span class="version">{r.version}</span>
+              <span class="name">{r.name}</span>
+              <span class="when">{r.when}</span>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <!-- COMMUNITY -->
+      <section class="section community">
+        <h2>{t.community.title}</h2>
+        <p class="section-sub">{t.community.sub}</p>
+        <div class="cta">
+          <a class="btn primary" href={`${repo}/issues`}>{t.community.issues}</a>
+          <a class="btn ghost" href={docs('community/contributing')}>{t.community.guide}</a>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <p>{t.footer.made}</p>
+      <p class="footer-licenses">
+        Hardware: CERN-OHL-S 2.0 · Firmware: GPLv3 · Docs: CC BY-SA 4.0
+      </p>
+      <p class="footer-quote"><em>{t.footer.quote}</em></p>
+    </footer>
+
+    <style>
+      :root {
+        --bg: #0b0714;
+        --bg-soft: #14102a;
+        --surface: #1b1535;
+        --border: #2e2657;
+        --violet: #8b5cf6;
+        --violet-deep: #4c1d95;
+        --violet-soft: #c4b5fd;
+        --text: #ede9fe;
+        --text-dim: #a89fd0;
+      }
+      * { box-sizing: border-box; margin: 0; }
+      html { scroll-behavior: smooth; }
+      body {
+        background: var(--bg);
+        color: var(--text);
+        font-family: ui-sans-serif, system-ui, 'Segoe UI', Roboto, sans-serif;
+        line-height: 1.6;
+        overflow-x: hidden;
+      }
+
+      /* Background mycelium */
+      .mycelium-bg {
+        position: fixed;
+        inset: 0;
+        width: 100%;
+        height: 100%;
+        z-index: -1;
+        opacity: 0.35;
+      }
+      .hyphae path {
+        stroke-opacity: 0.5;
+        stroke-dasharray: 1600;
+        stroke-dashoffset: 1600;
+        animation: grow 9s ease-out forwards;
+      }
+      .hyphae path:nth-child(2) { animation-delay: 0.6s; }
+      .hyphae path:nth-child(3) { animation-delay: 1.2s; }
+      .hyphae path:nth-child(n + 4) { animation-delay: 2.4s; animation-duration: 5s; }
+      @keyframes grow { to { stroke-dashoffset: 0; } }
+      .nodes circle { animation: pulse 4s ease-in-out infinite; opacity: 0.8; }
+      .nodes circle:nth-child(2n) { animation-delay: 1.3s; }
+      .nodes circle:nth-child(3n) { animation-delay: 2.1s; }
+      .tips circle { animation: pulse 5s ease-in-out infinite; animation-delay: 2s; opacity: 0.6; }
+      @keyframes pulse { 50% { opacity: 0.2; } }
+      @media (prefers-reduced-motion: reduce) {
+        .hyphae path { animation: none; stroke-dashoffset: 0; }
+        .nodes circle, .tips circle { animation: none; }
+      }
+
+      /* Nav */
+      .nav {
+        position: sticky;
+        top: 0;
+        backdrop-filter: blur(12px);
+        background: rgba(11, 7, 20, 0.7);
+        border-bottom: 1px solid var(--border);
+        z-index: 10;
+      }
+      .nav-inner {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 0.7rem 1.2rem;
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 1rem;
+        flex-wrap: wrap;
+      }
+      .brand {
+        display: flex;
+        align-items: center;
+        gap: 0.55rem;
+        font-weight: 800;
+        letter-spacing: 0.12em;
+        color: var(--text);
+        text-decoration: none;
+      }
+      .nav nav { display: flex; align-items: center; gap: 1.1rem; flex-wrap: wrap; }
+      .nav nav a {
+        color: var(--text-dim);
+        text-decoration: none;
+        font-size: 0.92rem;
+        transition: color 0.2s;
+      }
+      .nav nav a:hover { color: var(--violet-soft); }
+      .nav nav a.gh { color: var(--violet-soft); }
+      .langs { display: inline-flex; gap: 0.4rem; border-left: 1px solid var(--border); padding-left: 1rem; }
+      .langs a { font-size: 0.8rem; opacity: 0.7; }
+      .langs a.active { color: var(--violet); font-weight: 700; opacity: 1; }
+
+      main { max-width: 1100px; margin: 0 auto; padding: 0 1.2rem; }
+
+      /* Hero */
+      .hero { text-align: center; padding: 5.5rem 0 3.5rem; }
+      .hero .logo { filter: drop-shadow(0 0 32px rgba(139, 92, 246, 0.55)); }
+      .hero h1 {
+        font-size: clamp(2.6rem, 7vw, 4.2rem);
+        letter-spacing: 0.18em;
+        margin-top: 1rem;
+        background: linear-gradient(120deg, #c4b5fd, #8b5cf6 55%, #6d28d9);
+        -webkit-background-clip: text;
+        background-clip: text;
+        color: transparent;
+      }
+      .tagline { font-size: clamp(1.05rem, 2.4vw, 1.35rem); color: var(--text); margin-top: 0.6rem; font-weight: 600; }
+      .poem { color: var(--text-dim); font-style: italic; margin-top: 0.5rem; }
+      .cta { display: flex; gap: 0.9rem; justify-content: center; margin-top: 2rem; flex-wrap: wrap; }
+      .btn {
+        padding: 0.7rem 1.5rem;
+        border-radius: 999px;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: 0.95rem;
+        transition: transform 0.15s, box-shadow 0.2s;
+      }
+      .btn:hover { transform: translateY(-2px); }
+      .btn.primary {
+        background: linear-gradient(120deg, var(--violet), var(--violet-deep));
+        color: #fff;
+        box-shadow: 0 4px 24px rgba(139, 92, 246, 0.35);
+      }
+      .btn.ghost { border: 1px solid var(--border); color: var(--violet-soft); }
+      .badges { margin-top: 2.2rem; display: flex; gap: 0.5rem; justify-content: center; flex-wrap: wrap; }
+      .badges span {
+        font-size: 0.75rem;
+        padding: 0.25rem 0.7rem;
+        border: 1px solid var(--border);
+        border-radius: 999px;
+        color: var(--text-dim);
+        background: rgba(27, 21, 53, 0.6);
+      }
+
+      /* Pitch */
+      .pitch {
+        max-width: 720px;
+        margin: 0 auto;
+        padding: 2.5rem 0;
+        text-align: center;
+        color: var(--text-dim);
+      }
+      .pitch .highlight {
+        font-size: clamp(1.3rem, 3vw, 1.7rem);
+        font-weight: 800;
+        color: var(--text);
+        margin: 1.2rem 0;
+      }
+
+      /* Sections */
+      .section { padding: 3.5rem 0; }
+      .section h2 { font-size: clamp(1.5rem, 3.5vw, 2rem); text-align: center; }
+      .section-sub { text-align: center; color: var(--text-dim); margin: 0.5rem auto 0; max-width: 620px; }
+      .section-link { text-align: center; margin-top: 1.6rem; }
+      .section-link a { color: var(--violet-soft); text-decoration: none; font-weight: 600; }
+      .section-link a:hover { text-decoration: underline; }
+
+      .cards { display: grid; gap: 1rem; margin-top: 2rem; }
+      .cards.five { grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+      .cards.four { grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); }
+      .card {
+        background: linear-gradient(160deg, var(--surface), var(--bg-soft));
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.3rem;
+        transition: border-color 0.2s, transform 0.15s;
+      }
+      .card:hover { border-color: var(--violet); transform: translateY(-3px); }
+      .card-icon { font-size: 1.7rem; }
+      .card h3 { margin: 0.5rem 0 0.1rem; font-size: 1.05rem; }
+      .card-tech { color: var(--violet-soft); font-size: 0.8rem; font-family: ui-monospace, monospace; }
+      .card p { font-size: 0.88rem; color: var(--text-dim); margin-top: 0.4rem; }
+      .card.species .latin { font-style: italic; color: var(--violet-soft); font-size: 0.82rem; }
+      .card.species ul { list-style: none; padding: 0; margin: 0.7rem 0 0; font-size: 0.88rem; color: var(--text-dim); }
+      .card.species .difficulty { margin-top: 0.6rem; font-size: 0.95rem; }
+
+      /* Terminal */
+      .terminal {
+        background: #0d0a1a;
+        border: 1px solid var(--border);
+        border-radius: 14px;
+        padding: 1.4rem 1.6rem;
+        margin: 2rem auto 0;
+        max-width: 680px;
+        overflow-x: auto;
+        font-family: ui-monospace, 'Cascadia Code', Menlo, monospace;
+        font-size: 0.88rem;
+        line-height: 1.7;
+        color: #d6cffa;
+        box-shadow: 0 8px 40px rgba(76, 29, 149, 0.25);
+      }
+      .terminal .c { color: #6f6798; }
+
+      /* Roadmap */
+      .roadmap {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+        gap: 0.8rem;
+        margin-top: 2rem;
+      }
+      .milestone {
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        gap: 0.2rem;
+        background: var(--bg-soft);
+      }
+      .milestone.done { border-color: var(--violet); box-shadow: 0 0 24px rgba(139, 92, 246, 0.2); }
+      .milestone .version { font-family: ui-monospace, monospace; color: var(--violet-soft); font-size: 0.8rem; }
+      .milestone .name { font-weight: 700; }
+      .milestone .when { color: var(--text-dim); font-size: 0.8rem; }
+
+      .community { text-align: center; padding-bottom: 5rem; }
+
+      footer {
+        border-top: 1px solid var(--border);
+        text-align: center;
+        padding: 2.2rem 1.2rem 2.8rem;
+        color: var(--text-dim);
+        font-size: 0.88rem;
+      }
+      .footer-licenses { margin-top: 0.4rem; font-size: 0.78rem; opacity: 0.8; }
+      .footer-quote { margin-top: 1rem; color: var(--violet-soft); }
+    </style>
+  </body>
+</html>

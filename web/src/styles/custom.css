@@ -1,0 +1,26 @@
+/* Honguera — violet mycelium theme for Starlight docs */
+:root {
+  --sl-color-accent-low: #2e1065;
+  --sl-color-accent: #8b5cf6;
+  --sl-color-accent-high: #c4b5fd;
+}
+
+:root[data-theme='dark'] {
+  --sl-color-bg: #0b0714;
+  --sl-color-bg-nav: #14102a;
+  --sl-color-bg-sidebar: #0f0b1e;
+  --sl-color-hairline: #2e2657;
+  --sl-color-hairline-shade: #221b45;
+}
+
+:root[data-theme='light'] {
+  --sl-color-accent-low: #ede9fe;
+  --sl-color-accent: #6d28d9;
+  --sl-color-accent-high: #4c1d95;
+}
+
+/* Site title spacing to match the landing brand */
+.site-title {
+  font-weight: 800;
+  letter-spacing: 0.08em;
+}
