@@ -245,6 +245,13 @@ Every contribution is a new hypha joining the network.
 
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-8b5cf6?style=flat-square)](CONTRIBUTING.md)
 [![Good First Issue](https://img.shields.io/badge/Good_First_Issue-available-22c55e?style=flat-square)](../../issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22)
+[![FLOSS/fund](https://img.shields.io/badge/FLOSS%2Ffund-submitted-ef4444?style=flat-square)](https://dir.floss.fund)
+
+### 💰 Support
+
+Honguera is listed in the [FLOSS/fund directory](https://dir.floss.fund) — a curated registry of free/open-source projects seeking sustainable funding.
+
+[funding.json](funding.json) · [FLOSS/fund profile](https://dir.floss.fund)
 
 ---
 
